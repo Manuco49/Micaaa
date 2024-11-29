@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Querés ser solo mía?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 30px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .yes-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .no-button {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .message {
+      font-size: 25px;
+      color: #333;
+    }
+
+    .confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="question-container">
+    <h1>¿Querés ser solo mía?</h1>
+    <button class="yes-button" id="yes-btn">Sí</button>
+    <button class="no-button" id="no-btn">No</button>
+  </div>
+
+  <div class="container" id="response-container">
+    <h1 class="message" id="response-message"></h1>
+  </div>
+
+  <canvas class="confetti" id="confetti"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    const questionContainer = document.getElementById('question-container');
+    const responseContainer = document.getElementById('response-container');
+    const responseMessage = document.getElementById('response-message');
+    const yesButton = document.getElementById('yes-btn');
+    const noButton = document.getElementById('no-btn');
+    const confettiCanvas = document.getElementById('confetti');
+
+    // Muestra la pregunta inicial
+    window.onload = () => {
+      questionContainer.style.display = 'flex';
+    };
+
+    // Muestra el mensaje y el confeti si se responde "Sí"
+    yesButton.onclick = () => {
+      questionContainer.style.display = 'none';
+      responseContainer.style.display = 'flex';
+      responseMessage.textContent = "Perfecto, porque yo soy tuyo también";
+      showConfetti();
+    };
+
+    // Muestra el mensaje de respuesta equivocada y reinicia la pregunta si se responde "No"
+    noButton.onclick = () => {
+      questionContainer.style.display = 'none';
+      responseContainer.style.display = 'flex';
+      responseMessage.textContent = "Respuesta equivocada";
+      setTimeout(() => {
+        responseContainer.style.display = 'none';
+        questionContainer.style.display = 'flex';
+      }, 2000);  // Espera 2 segundos antes de mostrar la pregunta de nuevo
+    };
+
+    // Función para mostrar confeti
+    function showConfetti() {
+      confetti.create(confettiCanvas, {
+        resize: true,
+        useWorker: true
+      })({ particleCount: 100, spread: 70, origin: { x: 0.5, y: 0.5 } });
+    }
+  </script>
+
+</body>
+</html>
